@@ -1,10 +1,11 @@
-import '../styles/globals.css';
-import 'tailwindcss/tailwind.css';
 import type { AppProps } from 'next/app';
-import { Provider } from 'react-redux';
-import store from '../store';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import 'tailwindcss/tailwind.css';
+import { Provider } from 'react-redux';
+
+import '../styles/globals.css';
+import store from '../store';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

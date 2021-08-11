@@ -1,8 +1,9 @@
-import axios from '../config/axios';
 import { FC, useEffect } from 'react';
+import axios from '../config/axios';
+
 import Layout from '../components/Layout';
+import Questions from '../components/Questions';
 import { login } from '../features/auth/authSlice';
-import { increment } from '../features/counter/counterSlice';
 import { IResponse } from '../interface';
 import { useAppDispatch, useAppSelector } from '../store';
 
@@ -23,10 +24,8 @@ const Home: FC = () => {
     checkUserLogin();
   }, [dispatch]);
   return (
-    <Layout title="Welcome To TanyaJawab">
-      <h1 className="text-blue-500">Test</h1>
-      <p>{count}</p>
-      <button onClick={() => dispatch(increment())}>tambah</button>
+    <Layout title="TanyaJWB.id">
+      <Questions />
     </Layout>
   );
 };
