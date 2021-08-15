@@ -11,13 +11,13 @@ module.exports = {
     extend: {
       colors: {
         cyan: colors.cyan,
+        fuchsia: colors.fuchsia,
       },
     },
   },
   variants: {
     extend: {
-      backgroundColor: ['checked'],
-      borderColor: ['checked'],
+      opacity: ['disabled'],
     },
   },
   plugins: [],

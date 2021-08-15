@@ -1,29 +1,48 @@
 import Head from 'next/head';
-import { FC, ReactNode } from 'react';
+import { FC, ReactNode, useEffect } from 'react';
+import { IResponse } from '../interface';
+import { useAppDispatch } from '../store';
+import axios from '../config/axios';
 
 import Navbar from './Navbar';
+import { login } from '../features/auth/authSlice';
+import { useRouter } from 'next/router';
 
-const defaultProps = {
-  title: 'Welcome To TanyaJawab',
-};
 type IDefaultProps = {
   title?: string;
   children: ReactNode;
-} & typeof defaultProps;
+};
+const Layout: FC<IDefaultProps> = ({
+  children,
+  title = 'Welcome To TanyaJawab',
+}) => {
+  const dispatch = useAppDispatch();
+  const router = useRouter();
 
-const Layout: FC<IDefaultProps> = ({ children, title }) => {
+  useEffect(() => {
+    const checkUserLogin = async () => {
+      try {
+        const res: IResponse = await axios.get('/auth/me');
+        dispatch(login(res.user));
+      } catch (error) {
+        console.log(error.response.data);
+      }
+    };
+
+    checkUserLogin();
+  }, [dispatch]);
   return (
     <>
       <Head>
-        <title>{title} | TanyaJawab</title>
+        <title>
+          {router.pathname !== '/' ? title + ' | TanyaJawab' : title}
+        </title>
       </Head>
       <Navbar />
 
-      <main className="px-8 my-8 md:px-12">{children}</main>
+      <main className="w-full px-8 mx-auto my-8 md:w-1/2">{children}</main>
     </>
   );
 };
 
 export default Layout;
-
-Layout.defaultProps = defaultProps;

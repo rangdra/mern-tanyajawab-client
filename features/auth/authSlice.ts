@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import axios from '../../config/axios';
 import { IUser } from '../../interface';
 
 // Define a type for the slice state
@@ -16,8 +15,8 @@ const initialState: AuthState = {
   loading: true,
 };
 
-export const counterSlice = createSlice({
-  name: 'counter',
+export const authSlice = createSlice({
+  name: 'auth',
   initialState,
   reducers: {
     login: (state, action: PayloadAction<IUser>) => {
@@ -38,6 +37,6 @@ export const counterSlice = createSlice({
   },
 });
 
-export const { login, logout, register } = counterSlice.actions;
+export const { login, logout, register } = authSlice.actions;
 
-export default counterSlice.reducer;
+export default authSlice.reducer;
