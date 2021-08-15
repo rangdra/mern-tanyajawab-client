@@ -3,7 +3,7 @@ import { GetServerSideProps } from 'next';
 import Image from 'next/image';
 import Layout from '../../components/Layout';
 import { IQuestion } from '../../interface';
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -19,25 +19,31 @@ import { useRouter } from 'next/router';
 dayjs.extend(relativeTime);
 
 interface IProps {
-  detailQuestion: IQuestion;
+  data: IQuestion;
 }
-const QuestionDetail: FC<IProps> = ({ detailQuestion }) => {
+const QuestionDetail: FC<IProps> = ({ data }) => {
   const { user } = useAppSelector((state) => state.auth);
   const [voteScore, setVoteScore] = useState(0);
   const router = useRouter();
+  const [detailQuestion, setDetailQuestion] = useState(data);
 
   useEffect(() => {
-    const countVote = detailQuestion.votes.reduce(
+    const countVote = detailQuestion?.votes.reduce(
       (acc, curr) => acc + (curr.value || 0),
       0
     );
     setVoteScore(countVote);
-  }, [detailQuestion.votes]);
+  }, [detailQuestion?.votes]);
+
+  const getData = useCallback(async () => {
+    const res: IQuestion = await axios.get(`/questions/${router.query.slug}`);
+    setDetailQuestion(res);
+  }, [router]);
 
   const handleVote = async (value: number) => {
     try {
       await axios.put(`/questions/${detailQuestion._id}/votes`, { value });
-      router.push(`/questions/${detailQuestion.slug}`);
+      getData();
     } catch (error) {
       toast.error(error.response.data.message);
     }
@@ -153,7 +159,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   const data = await axios.get(`/questions/${slug}`);
   return {
     props: {
-      detailQuestion: data,
+      data,
     },
   };
 };
