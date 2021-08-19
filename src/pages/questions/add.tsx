@@ -141,13 +141,13 @@ const CreateQuestion = () => {
             value={data.title}
             onChange={handleChange}
             required
-            placeholder="Title Question"
+            placeholder="Title pertanyaan"
             className="border border-gray-300 h-[40px] pl-2 outline-none w-full"
           />
         </div>
         <div className="mb-2">
           <label htmlFor="body" className="block text-lg">
-            Body
+            Deskripsi
           </label>
           <textarea
             name="body"
@@ -155,7 +155,7 @@ const CreateQuestion = () => {
             value={data.body}
             onChange={handleChange}
             required
-            placeholder="Body Question"
+            placeholder="Deskripsi pertanyaan"
             className="border h-[100px] border-gray-300 p-2 outline-none w-full"
           />
         </div>
