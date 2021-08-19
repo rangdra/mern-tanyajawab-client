@@ -171,31 +171,6 @@ const MyProfile: FC = () => {
                 type="text"
                 placeholder="Your profesi"
               />
-
-              {/* <Input
-                margin="mb-2"
-                name="password"
-                label="Password"
-                type={`${showPassword ? 'text' : 'password'}`}
-                value={data?.password}
-                onChange={handleChange}
-                placeholder="Your password"
-              /> */}
-
-              {/* <div className="mb-2">
-                <label className="inline-flex items-center">
-                  <input
-                    type="checkbox"
-                    className="w-5 h-5"
-                    checked={showPassword}
-                    onChange={(e) => setShowPassword(e.target.checked)}
-                  />
-                  <span className="ml-2 text-sm text-gray-700">
-                    Show password
-                  </span>
-                </label>
-              </div> */}
-
               <Button type="submit">Update</Button>
             </form>
           </Tab.Panel>
