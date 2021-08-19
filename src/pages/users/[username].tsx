@@ -16,7 +16,7 @@ interface IResponse {
 }
 const UserProfile: FC<{ data: IResponse }> = ({ data }) => {
   return (
-    <Layout title={`${data.user.fullname} Profile`}>
+    <Layout title={`${data.user.fullname} profile`}>
       <Tab.Group>
         <Tab.List className="flex p-1 space-x-1 bg-gray-200 md:w-1/2 rounded-xl">
           <Tab
@@ -34,7 +34,7 @@ const UserProfile: FC<{ data: IResponse }> = ({ data }) => {
               className="w-5 h-5 mr-2 text-blue-500"
               aria-hidden="true"
             />
-            {data.user.fullname} Profile
+            {data.user.fullname} profil
           </Tab>
         </Tab.List>
         <Tab.Panels className="mt-2 shadow-xl">
@@ -60,14 +60,14 @@ const UserProfile: FC<{ data: IResponse }> = ({ data }) => {
             </div>
             <div className="mt-4">
               <h2 className="mb-2 text-2xl font-bold text-gray-700 md:text-3xl">
-                My Questions
+                Pertanyaan saya
               </h2>
               {data.questions.length > 0 ? (
                 data.questions.map((question) => (
                   <QuestionItem question={question} key={question._id} />
                 ))
               ) : (
-                <h3>No Question</h3>
+                <h3>Tidak ada pertanyaan</h3>
               )}
             </div>
           </Tab.Panel>

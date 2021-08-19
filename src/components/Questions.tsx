@@ -33,7 +33,7 @@ export default function Questions() {
             )
           }
         >
-          <BiNews className="mr-2 text-2xl text-blue-500" /> Newest
+          <BiNews className="mr-2 text-2xl text-blue-500" /> Terbaru
         </Tab>
         <Tab
           className={({ selected }) =>
@@ -60,7 +60,7 @@ export default function Questions() {
               }}
             >
               <span className="group-hover:text-white transition-duration">
-                Create Question
+                Buat Pertanyaan
               </span>
               <div className="flex items-center justify-center w-8 h-8 rounded-full group-hover:bg-white bg-fuchsia-500 transition-duration">
                 <FaPlus className="text-white group-hover:text-fuchsia-500 transition-duration" />
@@ -76,7 +76,7 @@ export default function Questions() {
               <QuestionItem question={question} key={question._id} />
             ))
           ) : (
-            <h3>No Question</h3>
+            <h3>Tidak ada pertanyaan</h3>
           )}
         </Tab.Panel>
         <Tab.Panel className="p-3 space-y-2 bg-white shadow-lg rounded-xl">
@@ -85,7 +85,7 @@ export default function Questions() {
               <QuestionItem question={question} key={question._id} />
             ))
           ) : (
-            <h3>No Question</h3>
+            <h3>Tidak ada pertanyaan</h3>
           )}
         </Tab.Panel>
       </Tab.Panels>

@@ -79,7 +79,7 @@ const MyProfile: FC = () => {
   }
 
   return (
-    <Layout title="My Profile">
+    <Layout title="Profil saya">
       <Tab.Group>
         <Tab.List className="flex p-1 space-x-1 bg-gray-200 rounded-xl">
           <Tab
@@ -93,7 +93,7 @@ const MyProfile: FC = () => {
               )
             }
           >
-            <BiNews className="mr-2 text-2xl text-blue-500" /> Profile
+            <BiNews className="mr-2 text-2xl text-blue-500" /> Profil
           </Tab>
           <Tab
             className={({ selected }) =>
@@ -106,8 +106,8 @@ const MyProfile: FC = () => {
               )
             }
           >
-            <GiPartyPopper className="mr-2 text-2xl text-yellow-500" /> My
-            Question
+            <GiPartyPopper className="mr-2 text-2xl text-yellow-500" />
+            Pertanyaan saya
           </Tab>
         </Tab.List>
         <Tab.Panels className="mt-2 shadow-xl">
@@ -130,7 +130,7 @@ const MyProfile: FC = () => {
                 />
                 {showEdit && (
                   <div className="absolute top-0 px-2 py-1 text-sm text-white bg-gray-800 rounded-md -left-16">
-                    Change
+                    Ganti
                   </div>
                 )}
 
@@ -199,7 +199,7 @@ const MyProfile: FC = () => {
             </div>
             <div className="mt-4">
               <h2 className="mb-2 text-2xl font-bold text-gray-700 md:text-3xl">
-                My Questions
+                Pertanyaan saya
               </h2>
               {loading ? (
                 <div className="flex justify-center py-6">
@@ -210,7 +210,7 @@ const MyProfile: FC = () => {
                   <QuestionItem question={question} key={question._id} />
                 ))
               ) : (
-                <h3>No Question</h3>
+                <h3>Tidak ada pertanyaan</h3>
               )}
             </div>
           </Tab.Panel>

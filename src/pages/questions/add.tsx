@@ -122,7 +122,7 @@ const CreateQuestion = () => {
   }
 
   return (
-    <Layout title={`${currentSlug ? 'Edit' : 'Create'} Question`}>
+    <Layout title={`${currentSlug ? 'Edit' : 'Create'} pertanyaan`}>
       <h2 className="mb-2 text-4xl font-bold md:tracking-wider md:font-extrabold">
         {currentSlug ? 'Edit' : 'Create'}
       </h2>
@@ -221,7 +221,7 @@ const CreateQuestion = () => {
           </div>
         </div>
 
-        <Button type="submit"> {currentSlug ? 'Edit' : 'Create'}</Button>
+        <Button type="submit"> {currentSlug ? 'Edit' : 'Submit'}</Button>
       </form>
     </Layout>
   );

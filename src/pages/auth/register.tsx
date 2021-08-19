@@ -35,7 +35,7 @@ const Register = () => {
   return (
     <div>
       <Head>
-        <title>Register</title>
+        <title>Register | TanyaJawab</title>
       </Head>
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -95,7 +95,7 @@ const Register = () => {
               </label>
             </div>
             <span className="text-sm">
-              Don&apos;t have an account?{' '}
+              already have an account?{' '}
               <Link href="/auth/login">
                 <a className="text-blue-500 underline">Login</a>
               </Link>

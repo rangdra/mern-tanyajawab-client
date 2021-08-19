@@ -32,7 +32,7 @@ const FormAnswer: FC<IProps> = ({ questionId, getData }) => {
         value={text}
         onChange={(e) => setText(e.target.value)}
       ></textarea>
-      <Button type="submit">Create Answer</Button>
+      <Button type="submit">Jawab pertanyaan</Button>
     </form>
   );
 };

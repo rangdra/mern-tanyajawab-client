@@ -1,12 +1,9 @@
 import { FC, ReactNode, useEffect } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import axios from 'config/axios';
 
-import { IResponse } from '../interface';
 import { useAppDispatch } from 'store';
 import Navbar from './Navbar';
-import { login } from 'store/features/auth/authSlice';
 import { checkUser } from 'store/actions/userAction';
 
 type IDefaultProps = {

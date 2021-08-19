@@ -6,10 +6,10 @@ import { Menu, Transition } from '@headlessui/react';
 import { ImStack } from 'react-icons/im';
 import { GoChevronDown } from 'react-icons/go';
 import { RiProfileFill, RiLogoutBoxRLine } from 'react-icons/ri';
+import { BsBookmarkFill } from 'react-icons/bs';
 
 import { useAppDispatch, useAppSelector } from 'store';
 import { logoutAction } from 'store/actions/authActions';
-import { BsBookmarkFill } from 'react-icons/bs';
 
 const Navbar: FC = () => {
   const [isDropdown, setIsDropdown] = useState(false);
@@ -72,7 +72,7 @@ const Navbar: FC = () => {
                           className="w-5 h-5 mr-2 text-blue-500"
                           aria-hidden="true"
                         />
-                        My Profile
+                        Profil saya
                       </button>
                     )}
                   </Menu.Item>
@@ -90,7 +90,7 @@ const Navbar: FC = () => {
                           className="w-5 h-5 mr-2 text-gray-600"
                           aria-hidden="true"
                         />
-                        Save ({user?.saveQuestions.length})
+                        Disimpan ({user?.saveQuestions.length})
                       </button>
                     )}
                   </Menu.Item>
@@ -108,7 +108,7 @@ const Navbar: FC = () => {
                           className="w-5 h-5 mr-2 text-red-500"
                           aria-hidden="true"
                         />
-                        Logout
+                        Keluar
                       </button>
                     )}
                   </Menu.Item>

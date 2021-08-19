@@ -16,14 +16,14 @@ const SaveQuestion = () => {
   return (
     <Layout title="Save Question">
       <h2 className="mb-2 text-2xl font-bold text-gray-700 md:text-3xl">
-        List Questions
+        List pertanyaan
       </h2>
       {user && user.saveQuestions.length > 0 ? (
         user?.saveQuestions.map((question) => (
           <QuestionItem key={question._id} question={question} />
         ))
       ) : (
-        <p>No Question</p>
+        <p>Tidak ada pertanyaan</p>
       )}
     </Layout>
   );

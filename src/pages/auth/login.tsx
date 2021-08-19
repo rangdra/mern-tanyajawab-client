@@ -34,7 +34,7 @@ const Login = () => {
   return (
     <div>
       <Head>
-        <title>Login</title>
+        <title>Login | TanyaJawab</title>
       </Head>
       <svg
         xmlns="http://www.w3.org/2000/svg"

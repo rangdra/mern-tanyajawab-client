@@ -7,7 +7,6 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 
 import { IAnswer, IQuestion } from '../interface';
 import { useAppSelector } from 'store';
-import axios from 'config/axios';
 import { handleVote } from 'store/actions/questionActions';
 
 dayjs.extend(relativeTime);
@@ -78,7 +77,9 @@ const AnswerBox: FC<IProps> = ({
           </div>
         </div>
         <div className="relative w-10/12 p-4">
-          <h2 className="font-semibold text-gray-800">Rangdra</h2>
+          <h2 className="font-semibold text-gray-800">
+            {answer.userId.fullname}
+          </h2>
           <p className="text-[12px] font-light text-gray-400">
             answer by{' '}
             <Link

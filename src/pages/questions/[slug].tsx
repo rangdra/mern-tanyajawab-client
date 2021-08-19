@@ -53,7 +53,7 @@ const QuestionDetail: FC<IProps> = ({ data }) => {
 
   return (
     <Layout title={detailQuestion?.slug}>
-      <h2 className="mb-4 text-3xl">Question: </h2>
+      <h2 className="mb-4 text-3xl">Pertanyaan: </h2>
       <div className="relative flex bg-white rounded-md shadow-lg">
         <div className="w-2/12 p-4 bg-gray-200">
           <div className="flex flex-col items-center justify-center space-y-2">
@@ -91,7 +91,7 @@ const QuestionDetail: FC<IProps> = ({ data }) => {
 
             <div className="pt-2 leading-relaxed text-center">
               <p className="text-2xl ">{detailQuestion.answers.length}</p>
-              <p className="text-sm md:text-lg">Answers</p>
+              <p className="text-sm md:text-lg">Jawaban</p>
             </div>
           </div>
         </div>
@@ -186,12 +186,12 @@ const QuestionDetail: FC<IProps> = ({ data }) => {
             />
           ))
         ) : (
-          <p>No answer</p>
+          <p>Tidak ada jawaban</p>
         )}
       </section>
 
       <section>
-        <h3 className="mt-6 mb-1">Your Answer</h3>
+        <h3 className="mt-6 mb-1">Buat Jawaban?</h3>
         <FormAnswer questionId={detailQuestion._id} getData={getData} />
       </section>
     </Layout>
