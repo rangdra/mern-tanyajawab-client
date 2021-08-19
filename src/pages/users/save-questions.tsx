@@ -18,8 +18,8 @@ const SaveQuestion = () => {
       <h2 className="mb-2 text-2xl font-bold text-gray-700 md:text-3xl">
         List Questions
       </h2>
-      {user!.saveQuestions.length > 0 ? (
-        user!.saveQuestions.map((question) => (
+      {user && user.saveQuestions.length > 0 ? (
+        user?.saveQuestions.map((question) => (
           <QuestionItem key={question._id} question={question} />
         ))
       ) : (
