@@ -72,9 +72,10 @@ const MyProfile: FC = () => {
 
     editUser(data, dispatch);
   };
-
-  if (!authenticated) {
-    router.push('/auth/login');
+  if (process.browser) {
+    if (!authenticated) {
+      router.push('/auth/login');
+    }
   }
 
   return (

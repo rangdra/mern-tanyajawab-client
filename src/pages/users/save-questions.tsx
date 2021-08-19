@@ -7,9 +7,12 @@ const SaveQuestion = () => {
   const { user, authenticated } = useAppSelector((state) => state.auth);
   const router = useRouter();
 
-  if (!authenticated) {
-    router.push('/auth/login');
+  if (process.browser) {
+    if (!authenticated) {
+      router.push('/auth/login');
+    }
   }
+
   return (
     <Layout title="Save Question">
       <h2 className="mb-2 text-2xl font-bold text-gray-700 md:text-3xl">

@@ -25,8 +25,10 @@ const Login = () => {
     loginAction(user, dispatch, router);
   };
 
-  if (authenticated) {
-    router.push('/');
+  if (process.browser) {
+    if (authenticated) {
+      router.push('/');
+    }
   }
 
   return (

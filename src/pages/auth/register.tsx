@@ -26,9 +26,12 @@ const Register = () => {
     registerAction(newUser, dispatch, router);
   };
 
-  if (authenticated) {
-    router.push('/auth/login');
+  if (process.browser) {
+    if (authenticated) {
+      router.push('/');
+    }
   }
+
   return (
     <div>
       <Head>

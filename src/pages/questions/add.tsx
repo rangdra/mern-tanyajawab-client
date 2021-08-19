@@ -115,9 +115,12 @@ const CreateQuestion = () => {
     }
   };
 
-  if (!authenticated) {
-    router.push('/auth/login');
+  if (process.browser) {
+    if (!authenticated) {
+      router.push('/auth/login');
+    }
   }
+
   return (
     <Layout title={`${currentSlug ? 'Edit' : 'Create'} Question`}>
       <h2 className="mb-2 text-4xl font-bold md:tracking-wider md:font-extrabold">
