@@ -3,16 +3,17 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
 
-import { useAppDispatch } from 'store';
+import { useAppDispatch, useAppSelector } from 'store';
 import { useFormFiedls } from 'hooks/useForm';
 import Button from 'components/atom/Button';
 import Input from 'components/atom/Input';
 import { loginAction } from 'store/actions/authActions';
-import { GetServerSideProps } from 'next';
 
 const Login = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const { authenticated } = useAppSelector((state) => state.auth);
+
   const [showPassword, setShowPassword] = useState(false);
   const [user, setUser] = useFormFiedls({
     username: '',
@@ -23,6 +24,10 @@ const Login = () => {
     e.preventDefault();
     loginAction(user, dispatch, router);
   };
+
+  if (authenticated) {
+    router.push('/');
+  }
 
   return (
     <div>
@@ -92,17 +97,3 @@ const Login = () => {
 };
 
 export default Login;
-
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const token = req.cookies.token;
-
-  if (token) {
-    res.writeHead(302, {
-      Location: '/',
-    });
-    res.end();
-  }
-  return {
-    props: {},
-  };
-};

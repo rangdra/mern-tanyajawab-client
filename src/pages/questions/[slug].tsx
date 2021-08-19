@@ -32,6 +32,7 @@ const QuestionDetail: FC<IProps> = ({ data }) => {
   const { user, authenticated } = useAppSelector((state) => state.auth);
   const router = useRouter();
   const dispatch = useAppDispatch();
+
   const [detailQuestion, setDetailQuestion] = useState(data);
 
   const getData = useCallback(async () => {

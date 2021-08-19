@@ -22,16 +22,16 @@ import { uploadImage } from 'utils/uploadImage';
 import { populateMyQuestions } from 'store/actions/questionActions';
 import { editUser } from 'store/actions/userAction';
 import classNames from 'utils/classNames';
-import { GetServerSideProps } from 'next';
+import { useRouter } from 'next/router';
 
 const MyProfile: FC = () => {
-  const { user } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const { user, authenticated } = useAppSelector((state) => state.auth);
   const { myQuestions, loading } = useAppSelector((state) => state.questions);
-  // const [showPassword, setShowPassword] = useState(false);
+
   const [showEdit, setShowEdit] = useState(false);
   const inputImage = useRef<HTMLInputElement | null>(null);
-
-  const dispatch = useAppDispatch();
   const [data, setData] = useState({
     fullname: '',
     username: '',
@@ -72,6 +72,10 @@ const MyProfile: FC = () => {
 
     editUser(data, dispatch);
   };
+
+  if (!authenticated) {
+    router.push('/auth/login');
+  }
 
   return (
     <Layout title="My Profile">
@@ -241,17 +245,3 @@ const MyProfile: FC = () => {
 };
 
 export default MyProfile;
-
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const token = req.cookies.token;
-
-  if (!token) {
-    res.writeHead(302, {
-      Location: '/auth/login',
-    });
-    res.end();
-  }
-  return {
-    props: {},
-  };
-};

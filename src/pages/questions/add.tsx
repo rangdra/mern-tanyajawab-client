@@ -11,13 +11,14 @@ import { IQuestion } from 'interface';
 import Button from 'components/atom/Button';
 import { uploadImageMulti } from 'utils/uploadImage';
 import { createQuestion, editQuestion } from 'store/actions/questionActions';
-import { GetServerSideProps } from 'next';
 
 const CreateQuestion = () => {
+  const router = useRouter();
+  const { currentSlug } = useAppSelector((state) => state.questions);
+  const { authenticated } = useAppSelector((state) => state.auth);
+
   const inputImage = useRef<HTMLInputElement | null>(null);
   const [images, setImages] = useState<any[]>([]);
-  const { currentSlug } = useAppSelector((state) => state.questions);
-  const router = useRouter();
   const [data, setData] = useState({
     title: '',
     body: '',
@@ -114,6 +115,9 @@ const CreateQuestion = () => {
     }
   };
 
+  if (!authenticated) {
+    router.push('/auth/login');
+  }
   return (
     <Layout title={`${currentSlug ? 'Edit' : 'Create'} Question`}>
       <h2 className="mb-2 text-4xl font-bold md:tracking-wider md:font-extrabold">
@@ -221,17 +225,3 @@ const CreateQuestion = () => {
 };
 
 export default CreateQuestion;
-
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const token = req.cookies.token;
-
-  if (!token) {
-    res.writeHead(302, {
-      Location: '/auth/login',
-    });
-    res.end();
-  }
-  return {
-    props: {},
-  };
-};

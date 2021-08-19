@@ -3,16 +3,17 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { FormEvent, useState } from 'react';
 
-import { useAppDispatch } from 'store';
+import { useAppDispatch, useAppSelector } from 'store';
 import { useFormFiedls } from 'hooks/useForm';
 import Button from 'components/atom/Button';
 import Input from 'components/atom/Input';
 import { registerAction } from 'store/actions/authActions';
-import { GetServerSideProps } from 'next';
 
 const Register = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const { authenticated } = useAppSelector((state) => state.auth);
+
   const [showPassword, setShowPassword] = useState(false);
   const [newUser, setNewUser] = useFormFiedls({
     fullname: '',
@@ -24,6 +25,10 @@ const Register = () => {
     e.preventDefault();
     registerAction(newUser, dispatch, router);
   };
+
+  if (authenticated) {
+    router.push('/auth/login');
+  }
   return (
     <div>
       <Head>
@@ -101,17 +106,3 @@ const Register = () => {
 };
 
 export default Register;
-
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const token = req.cookies.token;
-
-  if (token) {
-    res.writeHead(302, {
-      Location: '/',
-    });
-    res.end();
-  }
-  return {
-    props: {},
-  };
-};
