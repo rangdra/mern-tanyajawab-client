@@ -6,10 +6,10 @@ import { Menu, Transition } from '@headlessui/react';
 import { ImStack } from 'react-icons/im';
 import { GoChevronDown } from 'react-icons/go';
 import { RiProfileFill, RiLogoutBoxRLine } from 'react-icons/ri';
-import axios from '../config/axios';
 
-import { useAppDispatch, useAppSelector } from '../store';
-import { logout } from '../features/auth/authSlice';
+import { useAppDispatch, useAppSelector } from 'store';
+import { logoutAction } from 'store/actions/authActions';
+import { BsBookmarkFill } from 'react-icons/bs';
 
 const Navbar: FC = () => {
   const [isDropdown, setIsDropdown] = useState(false);
@@ -18,16 +18,6 @@ const Navbar: FC = () => {
     (state) => state.auth
   );
   const dispatch = useAppDispatch();
-
-  const handleLogout = async () => {
-    try {
-      await axios.post('/auth/logout');
-      dispatch(logout());
-      router.push('/');
-    } catch (error) {
-      console.log(error.response.data);
-    }
-  };
 
   return (
     <header className="flex items-center h-[80px] bg-gradient-to-br from-fuchsia-500 to-purple-600 sticky top-0 z-20">
@@ -68,7 +58,7 @@ const Navbar: FC = () => {
               leaveFrom="transform opacity-100 scale-100"
               leaveTo="transform opacity-0 scale-95"
             >
-              <Menu.Items className="absolute right-0 w-40 mt-1 origin-top-right bg-white divide-y divide-gray-100 rounded shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <Menu.Items className="absolute right-0 mt-1 origin-top-right bg-white divide-y divide-gray-100 rounded shadow-lg w-44 ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <div className="px-1 py-1">
                   <Menu.Item>
                     {({ active }) => (
@@ -94,7 +84,25 @@ const Navbar: FC = () => {
                         className={`${
                           active ? 'bg-fuchsia-500 text-white' : 'text-gray-900'
                         } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                        onClick={handleLogout}
+                        onClick={() => router.push('/users/save-questions')}
+                      >
+                        <BsBookmarkFill
+                          className="w-5 h-5 mr-2 text-gray-600"
+                          aria-hidden="true"
+                        />
+                        Save ({user?.saveQuestions.length})
+                      </button>
+                    )}
+                  </Menu.Item>
+                </div>
+                <div className="px-1 py-1">
+                  <Menu.Item>
+                    {({ active }) => (
+                      <button
+                        className={`${
+                          active ? 'bg-fuchsia-500 text-white' : 'text-gray-900'
+                        } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                        onClick={() => logoutAction(dispatch, router)}
                       >
                         <RiLogoutBoxRLine
                           className="w-5 h-5 mr-2 text-red-500"

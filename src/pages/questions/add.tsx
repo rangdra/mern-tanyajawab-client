@@ -1,14 +1,17 @@
-import axios from '../../config/axios';
-import { ChangeEvent, FormEvent, useState } from 'react';
-import Layout from '../../components/Layout';
+// @ts-nocheck
+
+import axios from 'config/axios';
+import { ChangeEvent, FormEvent, useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
-import { useAppSelector } from '../../store';
-import { useEffect } from 'react';
-import { IQuestion } from '../../interface';
-import Button from '../../components/atom/Button';
-import { useRef } from 'react';
-import uploadImageMulti from '../../utils/uploadImageMulti';
+import Layout from 'components/Layout';
+
+import { useAppSelector } from 'store';
+import { IQuestion } from 'interface';
+import Button from 'components/atom/Button';
+import { uploadImageMulti } from 'utils/uploadImage';
+import { createQuestion, editQuestion } from 'store/actions/questionActions';
+import { GetServerSideProps } from 'next';
 
 const CreateQuestion = () => {
   const inputImage = useRef<HTMLInputElement | null>(null);
@@ -28,19 +31,19 @@ const CreateQuestion = () => {
     const { name, value } = e.target;
     setData({ ...data, [name]: value });
   };
-  const deleteImage = (index: any) => {
+  const deleteImage = (index: number) => {
     const newArr = [...images];
     newArr.splice(index, 1);
     setImages(newArr);
   };
 
   const handleUploadInput = (
-    e?: ChangeEvent<HTMLInputElement | FileList[]>
+    e?: ChangeEvent<HTMLInputElement & EventTarget>
   ) => {
     let newImages: any = [];
     let num = 0;
     let err = '';
-    const files = [...e.target.files!];
+    const files: FileList[] = [...e.target!.files];
 
     if (files.length === 0) return toast.error('Files does not exist.');
 
@@ -91,26 +94,23 @@ const CreateQuestion = () => {
 
     if (currentSlug) {
       // edit
-      try {
-        await axios.put(`/questions/${currentSlug}`, {
+      editQuestion(
+        {
           ...data,
           photos: [...imgOldURL, ...media],
-        });
-        router.push('/');
-      } catch (error) {
-        toast.error(error.response.data.message);
-      }
+        },
+        currentSlug,
+        router
+      );
     } else {
       // create
-      try {
-        await axios.post('/questions', {
+      createQuestion(
+        {
           ...data,
           photos: [...imgOldURL, ...media],
-        });
-        router.push('/');
-      } catch (error) {
-        toast.error(error.response.data.message);
-      }
+        },
+        router
+      );
     }
   };
 
@@ -193,22 +193,24 @@ const CreateQuestion = () => {
 
           <div className="flex items-center mt-4 space-x-2">
             {images &&
-              images.map((img: any, index: number) => (
-                <div key={index} className="relative">
-                  <img
-                    src={img.url ? img.url : URL.createObjectURL(img)}
-                    alt=""
-                    className="object-cover h-24"
-                  />
+              images.map(
+                (img: { public_id: string; url: string }, index: number) => (
+                  <div key={index} className="relative">
+                    <img
+                      src={img.url ? img.url : URL.createObjectURL(img)}
+                      alt={img.public_id}
+                      className="object-cover h-24"
+                    />
 
-                  <span
-                    className="absolute flex items-center justify-center w-5 h-5 text-sm text-white bg-gray-700 rounded-full cursor-pointer -top-2 -right-2 hover:bg-white hover:text-gray-700"
-                    onClick={() => deleteImage(index)}
-                  >
-                    x
-                  </span>
-                </div>
-              ))}
+                    <span
+                      className="absolute flex items-center justify-center w-5 h-5 text-sm text-white bg-gray-700 rounded-full cursor-pointer -top-2 -right-2 hover:bg-white hover:text-gray-700"
+                      onClick={() => deleteImage(index)}
+                    >
+                      x
+                    </span>
+                  </div>
+                )
+              )}
           </div>
         </div>
 
@@ -219,3 +221,17 @@ const CreateQuestion = () => {
 };
 
 export default CreateQuestion;
+
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const token = req.cookies.token;
+
+  if (!token) {
+    res.writeHead(302, {
+      Location: '/auth/login',
+    });
+    res.end();
+  }
+  return {
+    props: {},
+  };
+};

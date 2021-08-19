@@ -8,6 +8,7 @@ export interface IUser {
   password: string;
   createdAt: string;
   updatedAt: string;
+  saveQuestions: IQuestion[];
   __v?: number;
 }
 
@@ -24,7 +25,7 @@ export interface IQuestion {
   title: string;
   body: string;
   userId: IUser;
-  answers: object[];
+  answers: IAnswer[];
   votes: IVote[];
   createdAt: string;
   updatedAt: string;
@@ -36,5 +37,16 @@ export interface IVote {
   value: number;
   userId: string | IUser;
   updatedAt: string;
+  createdAt: string;
+}
+
+export interface IAnswer {
+  _id: string;
+  text: string;
+  userId: IUser;
+  votes: {
+    value: number;
+    userId: string;
+  }[];
   createdAt: string;
 }

@@ -1,26 +1,24 @@
 import { Tab } from '@headlessui/react';
-import QuestionItem from './QuestionItem';
-import { GiPartyPopper } from 'react-icons/gi';
-import { AiOutlineLoading3Quarters } from 'react-icons/ai';
-import { FiTrendingUp } from 'react-icons/fi';
-import { BiNews } from 'react-icons/bi';
-import { useAppDispatch, useAppSelector } from '../store';
 import { FaPlus } from 'react-icons/fa';
 import { useRouter } from 'next/router';
-import { setCurrentSlug } from '../features/questions/questionSlice';
+import { GiPartyPopper } from 'react-icons/gi';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import { BiNews } from 'react-icons/bi';
 
-function classNames(...classes: any) {
-  return classes.filter(Boolean).join(' ');
-}
+import { useAppDispatch, useAppSelector } from '../store';
+import { setCurrentSlug } from 'store/features/questions/questionSlice';
+import QuestionItem from './QuestionItem';
+import classNames from 'utils/classNames';
 
 export default function Questions() {
-  const { data, loading } = useAppSelector((state) => state.questions);
+  const { data, loading, topQuestions } = useAppSelector(
+    (state) => state.questions
+  );
   const { authenticated } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
 
   const router = useRouter();
 
-  console.log(data);
   return (
     <Tab.Group>
       <Tab.List className="flex p-1 space-x-1 bg-gray-200 rounded-xl">
@@ -35,7 +33,7 @@ export default function Questions() {
             )
           }
         >
-          <BiNews className="mr-2 text-2xl text-blue-500" /> Recent
+          <BiNews className="mr-2 text-2xl text-blue-500" /> Newest
         </Tab>
         <Tab
           className={({ selected }) =>
@@ -49,18 +47,6 @@ export default function Questions() {
           }
         >
           <GiPartyPopper className="mr-2 text-2xl text-yellow-500" /> Populer
-        </Tab>
-        <Tab
-          className={({ selected }) =>
-            classNames(
-              'w-full py-2.5 leading-5 font-medium text-white rounded-lg flex items-center justify-center',
-              selected
-                ? 'bg-fuchsia-500 shadow'
-                : 'text-gray-600 hover:bg-fuchsia-500 hover:bg-opacity-70 hover:text-white'
-            )
-          }
-        >
-          <FiTrendingUp className="mr-2 text-xl text-green-500" /> Trending
         </Tab>
       </Tab.List>
       <Tab.Panels className="mt-2">
@@ -94,17 +80,8 @@ export default function Questions() {
           )}
         </Tab.Panel>
         <Tab.Panel className="p-3 space-y-2 bg-white shadow-lg rounded-xl">
-          {data.length > 0 ? (
-            data.map((question) => (
-              <QuestionItem question={question} key={question._id} />
-            ))
-          ) : (
-            <h3>No Question</h3>
-          )}
-        </Tab.Panel>{' '}
-        <Tab.Panel className="p-3 space-y-2 bg-white shadow-lg rounded-xl">
-          {data.length > 0 ? (
-            data.map((question) => (
+          {topQuestions.length > 0 ? (
+            topQuestions.map((question) => (
               <QuestionItem question={question} key={question._id} />
             ))
           ) : (

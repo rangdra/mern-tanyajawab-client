@@ -1,15 +1,13 @@
 import { useRouter } from 'next/router';
-import axios from '../../config/axios';
 import Head from 'next/head';
 import Link from 'next/link';
 import { FormEvent, useState } from 'react';
-import { IResponse } from '../../interface';
-import { useAppDispatch } from '../../store';
-import { register } from '../../features/auth/authSlice';
-import { toast } from 'react-toastify';
-import { useFormFiedls } from '../../hooks/useForm';
-import Button from '../../components/atom/Button';
-import Input from '../../components/atom/Input';
+
+import { useAppDispatch } from 'store';
+import { useFormFiedls } from 'hooks/useForm';
+import Button from 'components/atom/Button';
+import Input from 'components/atom/Input';
+import { registerAction } from 'store/actions/authActions';
 import { GetServerSideProps } from 'next';
 
 const Register = () => {
@@ -24,13 +22,7 @@ const Register = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    try {
-      const res: IResponse = await axios.post('/auth/register', newUser);
-      dispatch(register(res.user));
-      router.push('/');
-    } catch (error) {
-      toast.error(error.response.data.message);
-    }
+    registerAction(newUser, dispatch, router);
   };
   return (
     <div>
@@ -109,3 +101,17 @@ const Register = () => {
 };
 
 export default Register;
+
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const token = req.cookies.token;
+
+  if (token) {
+    res.writeHead(302, {
+      Location: '/',
+    });
+    res.end();
+  }
+  return {
+    props: {},
+  };
+};

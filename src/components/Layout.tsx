@@ -1,12 +1,13 @@
-import Head from 'next/head';
 import { FC, ReactNode, useEffect } from 'react';
-import { IResponse } from '../interface';
-import { useAppDispatch } from '../store';
-import axios from '../config/axios';
-
-import Navbar from './Navbar';
-import { login } from '../features/auth/authSlice';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
+import axios from 'config/axios';
+
+import { IResponse } from '../interface';
+import { useAppDispatch } from 'store';
+import Navbar from './Navbar';
+import { login } from 'store/features/auth/authSlice';
+import { checkUser } from 'store/actions/userAction';
 
 type IDefaultProps = {
   title?: string;
@@ -20,16 +21,7 @@ const Layout: FC<IDefaultProps> = ({
   const router = useRouter();
 
   useEffect(() => {
-    const checkUserLogin = async () => {
-      try {
-        const res: IResponse = await axios.get('/auth/me');
-        dispatch(login(res.user));
-      } catch (error) {
-        console.log(error.response.data);
-      }
-    };
-
-    checkUserLogin();
+    checkUser(dispatch);
   }, [dispatch]);
   return (
     <>
