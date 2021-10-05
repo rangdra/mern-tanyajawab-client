@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Link from 'next/link';
 import Image from 'next/image';
 import { FC } from 'react';
@@ -6,6 +7,7 @@ import { BsBookmarkPlus, BsBookmarkFill } from 'react-icons/bs';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useRouter } from 'next/router';
+import { SRLWrapper } from 'simple-react-lightbox';
 
 import { IQuestion } from '../interface';
 import { useAppDispatch, useAppSelector } from 'store';
@@ -14,6 +16,7 @@ import {
   handleEditQuestion,
 } from 'store/actions/questionActions';
 import { saveQuestion } from 'store/actions/userAction';
+import { colorTag, randomIntFromInterval } from 'utils/colorTag';
 
 dayjs.extend(relativeTime);
 
@@ -47,24 +50,28 @@ const QuestionItem: FC<IProps> = ({ question }) => {
           </Link>
 
           <p className="mb-2 font-light limit-text-3">{question.body}</p>
-          <div className="flex items-center my-2 space-x-3">
-            {question.photos.map((photo) => (
-              <>
-                <div className="relative w-20 h-20" key={photo.public_id}>
+          <SRLWrapper>
+            {' '}
+            <div className="flex items-center my-2 space-x-3">
+              {question.photos.map((photo) => (
+                <div className="relative w-36 h-36" key={photo.public_id}>
                   <Image
                     src={photo.url}
-                    alt={photo.public_id}
+                    alt={`${question.userId.fullname} images`}
                     layout="fill"
                     objectFit="cover"
+                    srl_gallery_image="true"
                   />
                 </div>
-              </>
-            ))}
-          </div>
+              ))}
+            </div>{' '}
+          </SRLWrapper>
           <div className="space-x-2">
             {question.tags.map((tag, idx) => (
               <span
-                className="px-2 py-1 text-[12px] text-sm text-blue-500 bg-blue-300 rounded-md cursor-pointer hover:underline"
+                className={`${
+                  colorTag[randomIntFromInterval(0, colorTag.length)]
+                } px-2 py-1 text-[12px] text-sm rounded-md cursor-pointer hover:underline`}
                 key={idx}
               >
                 {tag}

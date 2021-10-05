@@ -1,3 +1,4 @@
+// @ts-nocheck
 import axios from 'config/axios';
 import { GetServerSideProps } from 'next';
 import dayjs from 'dayjs';
@@ -10,6 +11,7 @@ import { FC, useCallback, useState } from 'react';
 import { TiArrowSortedUp, TiArrowSortedDown } from 'react-icons/ti';
 import { FaTrash, FaEdit } from 'react-icons/fa';
 import { BsBookmarkPlus, BsBookmarkFill } from 'react-icons/bs';
+import { SRLWrapper } from 'simple-react-lightbox';
 
 import Layout from 'components/Layout';
 import { IAnswer, IQuestion } from 'interface';
@@ -46,7 +48,7 @@ const QuestionDetail: FC<IProps> = ({ data }) => {
         `/questions/${detailQuestion._id}/answers/${answerId}`
       );
       getData();
-    } catch (error) {
+    } catch (error: any) {
       toast.error(error.response.data.message);
     }
   };
@@ -115,20 +117,21 @@ const QuestionDetail: FC<IProps> = ({ data }) => {
             • {dayjs(detailQuestion.createdAt).fromNow()}
           </p>
           <p className="my-2 text-sm">{detailQuestion.body}</p>
-          <div className="flex items-center mb-4 space-x-3 overflow-auto">
-            {detailQuestion.photos.map((photo) => (
-              <>
+          <SRLWrapper>
+            <div className="flex items-center mb-4 space-x-3 overflow-auto cursor-pointer">
+              {detailQuestion.photos.map((photo) => (
                 <div className="relative w-32 h-32" key={photo.public_id}>
                   <Image
                     src={photo.url}
-                    alt={photo.public_id}
+                    alt={`${detailQuestion.userId.fullname} images`}
                     layout="fill"
                     objectFit="cover"
+                    srl_gallery_image="true"
                   />
                 </div>
-              </>
-            ))}
-          </div>
+              ))}
+            </div>
+          </SRLWrapper>
           <div className="space-x-2">
             {detailQuestion.tags.map((tag, idx) => (
               <span
